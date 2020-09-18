@@ -37,13 +37,14 @@ module PDFToImage
                 raise PDFError, "File '#{filename}' not found."
             end
 
-            pages = page_count(filename)
+            cmd_filename = Shellwords.escape(filename)
+            pages = page_count(cmd_filename)
 
             # Array of images
             images = []
 
             1.upto(pages) { |n|
-                dimensions = page_size(filename, n)
+                dimensions = page_size(cmd_filename, n)
                 image = Image.new(filename, random_filename, n, dimensions, pages)
                 images << image
             }
